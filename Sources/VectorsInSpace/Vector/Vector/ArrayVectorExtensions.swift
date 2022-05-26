@@ -8,8 +8,6 @@
 import Foundation
 import Numerics
 
-public extension Array where Element: AlgebraicField {
-    func vector() -> Vector<Element> {
-        return Vector(self)
-    }
-}
+//extension Array: VectorProtocol {
+//    public var length: Int { get { self.count } }
+//}

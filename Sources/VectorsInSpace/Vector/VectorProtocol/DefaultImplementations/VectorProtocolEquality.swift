@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import Numerics
 
-public extension VectorProtocol {
+public extension VectorProtocol
+where Element: Equatable {
     @inlinable
     static func ==<T: VectorProtocol>(_ lhs: Self, _ rhs: T) -> Bool where T.Element == Element {
         guard lhs.length == rhs.length else {

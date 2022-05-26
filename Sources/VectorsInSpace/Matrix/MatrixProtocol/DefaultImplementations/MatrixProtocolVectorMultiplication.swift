@@ -8,11 +8,12 @@
 import Foundation
 import Numerics
 
-public extension MatrixProtocol {
+public extension MatrixProtocol
+where Element: AlgebraicField {
     @inlinable
     static func *<V: VectorProtocol>(_ lhs: Self, _ rhs: V) -> Vector<Element>
     where V.Element == Element {
-        assert(lhs.columnCount == rhs.length, "Incompatible dimensions matrix-vector multiplication")
+        assert(lhs.columnCount == rhs.length, "Incompatible dimensions matrix-vector  multiplication")
         
         let n = lhs.columnCount
         
@@ -25,33 +26,21 @@ public extension MatrixProtocol {
         
         return result
     }
-    
-    @inlinable
-    static func *<V: VectorProtocol, R: Real>(_ lhs: Self, _ rhs: V) -> Vector<Element>
-    where Element == Complex<R>, V.Element == R {
-        lhs * Vector(rhs.map { Element($0) })
-    }
-    
+
     @inlinable
     static func *<V: VectorProtocol>(_ lhs: V, _ rhs: Self) -> Vector<Element>
     where V.Element == Element {
         assert(rhs.rowCount == lhs.length, "Incompatible dimensions matrix-vector multiplication")
-        
+
         let n = rhs.rowCount
-        
+
         var result = Vector<Element>.zero(n)
         for i in 0..<n {
             for j in 0..<n {
                 result[i] += lhs[j] * rhs[j, i]
             }
         }
-        
+
         return result
-    }
-    
-    @inlinable
-    static func *<V: VectorProtocol>(_ lhs: V, _ rhs: Self) -> Vector<Complex<Element>>
-    where Element: Real, V.Element == Complex<Element> {
-        lhs * Matrix<Complex<Element>>(rhs.elements.map { Complex<Element>($0) }, (rhs.rowCount, rhs.columnCount))
     }
 }

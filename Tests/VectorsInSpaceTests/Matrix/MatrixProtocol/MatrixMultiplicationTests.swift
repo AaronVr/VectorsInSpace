@@ -46,4 +46,15 @@ class MatrixMultiplicationTests: XCTestCase {
         XCTAssertEqual(A * B, [[3, 4],
                                [6, 8]])
     }
+    
+    func testMatrixMultiplicationPerformance() throws {
+        let A = Matrix<Double>(Array((0..<400).map {Double($0)}), (20, 20))
+        let B = Matrix<Double>(Array((0..<400).map {Double($0)}), (20, 20))
+        let _ = A * B
+//        measure {
+//            for _ in 0..<10000 {
+//                let _ = A * B
+//            }
+//        }
+    }
 }

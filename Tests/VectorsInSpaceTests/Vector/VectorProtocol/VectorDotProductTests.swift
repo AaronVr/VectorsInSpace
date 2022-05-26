@@ -7,6 +7,7 @@
 
 import XCTest
 import Numerics
+import simd
 @testable import VectorsInSpace
 
 class VectorDotProductTests: XCTestCase {
@@ -17,15 +18,28 @@ class VectorDotProductTests: XCTestCase {
         XCTAssertEqual(3.0, v * w)
     }
     
+    func testDotProductLargeReal() throws {
+        let v = Vector(((0..<64).map { Double($0) }))
+        let w = Vector(((0..<64).map { Double($0) }))
+        
+        XCTAssertEqual(85344.0, v * w)
+    }
+    
     func testDotProductSimpleComplex() throws {
         let v: Vector = [2 + 1.i, 0, 4 - 5.i]
         let w: Vector = [1 + 1.i, 2 + 1.i, 0]
         
-//        let v = [2+3.i,7+3.i].vector()
-//        let w = [1+2.i,2+2.i].vector()
+        XCTAssertEqual(1 + 3.i, v * w)
+    }
+    
+    func testDotProductPerformance() throws {
+        let v = Vector(((0..<64).map { Double($0) }))
+        let w = Vector(((0..<64).map { Double($0) }))
         
-//        XCTAssertEqual(28+9.i, try v*w)
-        
-        XCTAssertEqual(1 + 3.i, try v * w)
+        measure {
+            for _ in 0..<10000 {
+                let _ = v * w
+            }
+        }
     }
 }

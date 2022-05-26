@@ -6,7 +6,6 @@
 //
 
 import Foundation
-
 import Numerics
 
 public extension Matrix {

@@ -8,22 +8,9 @@
 import Foundation
 import Numerics
 
-public struct CirculantMatrix<Element: AlgebraicField>: MatrixProtocol {    
+public struct CirculantMatrix<Element>: MatrixProtocol {    
     public let sourceVector: Vector<Element>
-    public var dimensions: (Int, Int)
-    
-    @inlinable
-    public var elements: ContiguousArray<Element> {
-        get {
-            var elements: ContiguousArray<Element> = []
-            for row in 0..<rowCount {
-                for column in 0..<columnCount {
-                    elements.append(self[row, column])
-                }
-            }
-            return elements
-        }
-    }
+    public let dimensions: (Int, Int)
     
     @inlinable
     public init(_ vector: Vector<Element>) {
@@ -38,6 +25,9 @@ public struct CirculantMatrix<Element: AlgebraicField>: MatrixProtocol {
     
     @inlinable
     public subscript(_ row: Int, _ column: Int) -> Element {
-        return sourceVector[(column + sourceVector.count - row) % sourceVector.count]
+        get { sourceVector[(column + sourceVector.count - row) % sourceVector.count] }
+//        get { sourceVector[(column - row) %% sourceVector.count] }
     }
 }
+
+extension CirculantMatrix: Equatable where Element: Equatable {}

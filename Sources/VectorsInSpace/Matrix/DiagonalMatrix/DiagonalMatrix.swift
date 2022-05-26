@@ -14,7 +14,7 @@ public struct DiagonalMatrix<Element: AlgebraicField>: MatrixProtocol {
     public var elements: ContiguousArray<Element>
     
     public init(_ vector: Vector<Element>) {
-        self.elements = vector.elements
+        self.elements = vector._elements
         self.dimensions = (elements.count, elements.count)
     }
     

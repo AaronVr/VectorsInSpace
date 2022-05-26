@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import RealModule
 
-extension CirculantMatrix {
+extension CirculantMatrix
+where Element: AlgebraicField {
     @inlinable
     public static func -(_ lhs: Self, _ rhs: Self) throws -> Self {
         assert(lhs.dimensions == rhs.dimensions, "Incompatible matrix dimensions")

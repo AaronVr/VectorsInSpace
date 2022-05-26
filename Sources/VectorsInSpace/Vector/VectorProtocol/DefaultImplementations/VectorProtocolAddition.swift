@@ -6,16 +6,20 @@
 //
 
 import Foundation
+import RealModule
 
 
-public extension VectorProtocol {
+public extension VectorProtocol
+where Element: AlgebraicField {
     @inlinable
     static func +<T: VectorProtocol>(_ lhs: Self, _ rhs: T) -> Vector<Element> where T.Element == Element {
         assert(lhs.length == rhs.length, "Vectors of unequal length")
         
-        let result = zip(lhs, rhs)  // Make zipped (r, l) tuples
-            .map { $0 + $1 }        // Add pairs together
+        var result = Vector<Element>.zero(lhs.length)
+        for i in 0..<lhs.length {
+            result[i] = lhs[i] + rhs[i]
+        }
         
-        return Vector(result)
+        return result
     }    
 }

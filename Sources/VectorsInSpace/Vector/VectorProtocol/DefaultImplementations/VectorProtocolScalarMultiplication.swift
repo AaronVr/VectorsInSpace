@@ -6,11 +6,17 @@
 //
 
 import Foundation
+import Numerics
 
-public extension VectorProtocol {
+public extension VectorProtocol
+where Element: AlgebraicField {
     @inlinable
     static func *(_ lhs: Element, _ rhs: Self) -> Vector<Element> {
-        return Vector(rhs.map { lhs * $0 })
+        var result = Vector<Element>.zero(rhs.length)
+        for i in 0..<rhs.length {
+            result[i] = lhs * rhs[i]
+        }
+        return result
     }
     
     @inlinable

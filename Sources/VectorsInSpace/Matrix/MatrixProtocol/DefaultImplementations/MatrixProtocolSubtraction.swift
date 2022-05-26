@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import Numerics
 
-public extension MatrixProtocol {
+public extension MatrixProtocol
+where Element: AlgebraicField {
     @inlinable
     static func -<T: MatrixProtocol>(_ lhs: Self, _ rhs: T) -> Matrix<Element> where T.Element == Element {
         assert(lhs.dimensions == rhs.dimensions, "Incompatible matrix dimensions")

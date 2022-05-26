@@ -7,7 +7,8 @@
 
 import Foundation
 
-public extension MatrixProtocol {
+public extension MatrixProtocol
+where Element: Equatable {
     @inlinable
     static func ==<M: MatrixProtocol>(_ lhs: Self, _ rhs: M) -> Bool where M.Element == Element {
         return lhs.dimensions == rhs.dimensions && lhs.elements == rhs.elements

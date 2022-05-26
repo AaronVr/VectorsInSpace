@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import Numerics
 
-public extension MatrixProtocol {
+public extension MatrixProtocol
+where Element: AlgebraicField {
     @inlinable
     static func *(_ lhs: Self, _ rhs: Element) -> Matrix<Element> {
         Matrix(lhs.elements.map { rhs * $0 }, lhs.dimensions)

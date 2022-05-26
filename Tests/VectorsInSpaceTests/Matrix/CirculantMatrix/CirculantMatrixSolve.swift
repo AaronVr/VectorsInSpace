@@ -11,7 +11,7 @@ import Numerics
 
 class CirculantMatrixSolve: XCTestCase {
     func testSolveRealSimple() throws {
-        let A = CirculantMatrix([1, 2, 3, 4, 5])
+        let A = CirculantMatrix([1.0, 2.0, 3.0, 4.0, 5.0])
         let b: Vector = [1, 2, 3, 4, 5]
         
         let result = A.solve(b)
@@ -23,9 +23,11 @@ class CirculantMatrixSolve: XCTestCase {
     }
 
     func testSolveComplexSimple() throws {
-        let A = CirculantMatrix([1 + 1.i, 2 + 3.i, 3 - 8.i, 4 - 2.i, 5 + 8.i])
-        let b: Vector = [1.i, 2 + 3.i, 3 + 4.i, 4, 5]
+//        let A = CirculantMatrix([1 + 1.i, 2 + 3.i, 3 - 8.i, 4 - 2.i, 5 + 8.i])
+//        let b: Vector = [1.i, 2 + 3.i, 3 + 4.i, 4, 5]
 //        print(A.solve(b))
+        
+        XCTAssertTrue(false)
     }
 
 }

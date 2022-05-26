@@ -17,6 +17,17 @@ public extension CirculantMatrix {
         let IDFT = Matrix<Element>.IDFT(rowCount)
         let inverseDiagonalisedMatrix = DiagonalMatrix(eigenvalues().map { 1/$0 } )
         
+        return DFT * (inverseDiagonalisedMatrix * (IDFT * vector.toComplex()))
+    }
+    
+    func solve<V: VectorProtocol, R: Real>(_ vector: V) -> Vector<Complex<R>>
+    where Element == Complex<R>, V.Element == Complex<R> {
+        assert(rowCount == vector.length, "Incompatible dimensions solve linear system")
+        
+        let DFT = Matrix<Element>.DFT(rowCount)
+        let IDFT = Matrix<Element>.IDFT(rowCount)
+        let inverseDiagonalisedMatrix = DiagonalMatrix(eigenvalues().map { 1/$0 } )
+        
         return DFT * (inverseDiagonalisedMatrix * (IDFT * vector))
     }
 }

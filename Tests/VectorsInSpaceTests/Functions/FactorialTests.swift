@@ -10,7 +10,10 @@ import XCTest
 
 class FactorialTests: XCTestCase {
     func testFactorial() throws {
-        let n = factorial(10)
-        print(n)
+        for i in 0..<30 {
+            let _ = factorial(i)
+        }
+//        let n = factorial(10)
+//        print(n)
     }
 }

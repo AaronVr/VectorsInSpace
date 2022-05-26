@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import Numerics
 
-public extension Matrix {
+public extension Matrix
+where Element: AlgebraicField {
     static func Identity(_ n: Int) -> Matrix<Element> {
         var matrix = Matrix(Array(repeating: Element.zero, count: n*n), (n, n))
         

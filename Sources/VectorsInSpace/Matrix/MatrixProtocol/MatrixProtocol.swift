@@ -8,57 +8,53 @@
 import Foundation
 import Numerics
 
-public protocol MatrixProtocol: Equatable, CustomStringConvertible {
-    associatedtype Element: AlgebraicField
-
+public protocol MatrixProtocol: CustomStringConvertible {
+    associatedtype Element
     var dimensions: (Int, Int) { get }
-    
-    var elements: ContiguousArray<Element> { get }
-    
+        
+    @inlinable
     subscript(_ row: Int, _ column: Int) -> Self.Element {
         get
     }
-    
-//    var T: Matrix<Element> { get }
-    
-    // Arithmetic operations
-    // Matrix addition
-    static func +<T: MatrixProtocol>(_ lhs: Self, _ rhs: T) -> Matrix<Element> where T.Element == Element
-    
-    // Matrix subtraction
-    static func -<T: MatrixProtocol>(_ lhs: Self, _ rhs: T) -> Matrix<Element> where T.Element == Element
-    
-    // Matrix multiplication
-    static func *<T: MatrixProtocol, R: Real>(_ lhs: Self, _ rhs: T) -> Matrix<Element> where Element == R, T.Element == Element
-    static func *<T: MatrixProtocol, R: Real>(_ lhs: Self, _ rhs: T) -> Matrix<Element> where Element == Complex<R>, T.Element == Element
-    
-    // Scalar matrix multiplication
-    static func *(_ lhs: Self, _ rhs: Element) -> Matrix<Element>
-    static func *(_ lhs: Element, _ rhs: Self) -> Matrix<Element>
-    
-    // Vector matrix multiplication
-    static func *<V: VectorProtocol>(_ lhs: Self, _ rhs: V) -> Vector<Element> where V.Element == Element
-    static func *<V: VectorProtocol>(_ lhs: V, _ rhs: Self) -> Vector<Element> where V.Element == Element
+}
+
+public extension MatrixProtocol {
+    @inlinable
+    var elements: ContiguousArray<Element> {
+        get {
+            var elements: ContiguousArray<Element> = []
+            for row in 0..<rowCount {
+                for column in 0..<columnCount {
+                    elements.append(self[row, column])
+                }
+            }
+            return elements
+        }
+    }
 }
 
 // Basic row, column properties and functions.
 public extension MatrixProtocol {
-    var rows: [MatrixRow<Self>] { get { (0..<rowCount).map { row($0) } } }
-    var cols: [MatrixColumn<Self>] { get { (0..<columnCount).map { column($0) } } }
-    
+    var rows: [MatrixSlice<Self>] { get { (0..<rowCount).map { row($0) } } }
+    var cols: [MatrixSlice<Self>] { get { (0..<columnCount).map { column($0) } } }
+
+    @inlinable
     var rowCount: Int { get { dimensions.0 } }
+    @inlinable
     var columnCount: Int { get { dimensions.1 } }
     
-    func row(_ index: Int) -> MatrixRow<Self> {
-        MatrixRow(self, index)
-    }
-    
-    func column(_ index: Int) -> MatrixColumn<Self> {
-        MatrixColumn(self, index)
+    @inlinable
+    func row(_ index: Int) -> MatrixSlice<Self> {
+        MatrixSlice(self, using: { (index, $0) }, length: columnCount)
     }
     
     @inlinable
-    subscript(_ at: Int) -> MatrixRow<Self> { get { row(at) } }
+    func column(_ index: Int) -> MatrixSlice<Self> {
+        MatrixSlice(self, using: { ( $0, index) }, length: rowCount)
+    }
+    
+    @inlinable
+    subscript(_ at: Int) -> MatrixSlice<Self> { get { row(at) } }
 }
 
 public extension MatrixProtocol {

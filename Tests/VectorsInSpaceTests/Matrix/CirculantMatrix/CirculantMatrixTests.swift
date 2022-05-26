@@ -11,27 +11,27 @@ import Numerics
 
 class CirculantMatrixTests: XCTestCase {
     func testSimpleCirculantMultiplication() throws {
-        let v: Vector<Complex<Double>> = [1.0, 2.0, 3.0]
+        let v: Vector<Double> = [1.0, 2.0, 3.0]
         let A = CirculantMatrix(v)
         let At: Matrix = [[1, 2, 3],
                           [3, 1, 2],
                           [2, 3, 1]]
         
-        let w: Vector<Complex<Double>> = [3, 4, 5]
+        let w: Vector<Double> = [3, 4, 5]
         let B = CirculantMatrix(w)
         let Bt: Matrix = [[3, 4, 5],
                           [5, 3, 4],
                           [4, 5, 3]]
-        
-//        XCTAssertEqual(A * B, At * Bt)
+
+        XCTAssertEqual(A * B, At * Bt)
     }
     
-    func testCirculantTemporary() {
+    func testCirculantPerformanceSpecialisedPower() {
         let A = CirculantMatrix([1.0/2, 1.0/2, 0, 0, 0, 0, 0, 0, 0])
 
         measure {
             for _ in 0..<100 {
-                let _ = A**2
+                let _ = A**10
             }
         }
     }
@@ -41,7 +41,17 @@ class CirculantMatrixTests: XCTestCase {
         
         measure {
             for _ in 0..<100 {
-                let _ =  A*A
+                let _ =  A*A*A*A*A*A*A*A*A*A
+            }
+        }
+    }
+    
+    func testCirculantMatrixIndexing() {
+        let A = CirculantMatrix([1.0/2, 1.0/2, 0, 0, 0, 0, 0, 0, 0])
+        
+        measure {
+            for _ in 0..<100 {
+                let _ =  A*A*A*A*A*A*A*A*A*A
             }
         }
     }

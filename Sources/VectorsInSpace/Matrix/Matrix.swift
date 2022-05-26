@@ -8,9 +8,7 @@
 import Foundation
 import Numerics
 
-public struct Matrix<Element: AlgebraicField>: MatrixProtocol, ExpressibleByArrayLiteral {
-    public typealias ArrayLiteralElement = Array<Element>
-    
+public struct Matrix<Element>: MatrixProtocol {
     public var elements: ContiguousArray<Element>
     public let dimensions: (Int, Int)
     
@@ -36,6 +34,13 @@ public struct Matrix<Element: AlgebraicField>: MatrixProtocol, ExpressibleByArra
     }
     
     @inlinable
+    public init<T: Collection>(_ elements: T, _ dimensions: (Int, Int)) where T.Element == Element {
+        assert(elements.count == dimensions.0 & dimensions.1)
+        self.elements = ContiguousArray(elements)
+        self.dimensions = dimensions
+    }
+    
+    @inlinable
     public init<M: MatrixProtocol>(_ matrix: M) where M.Element == Element {
         elements = ContiguousArray()
         for i in 0..<matrix.rowCount {
@@ -46,20 +51,10 @@ public struct Matrix<Element: AlgebraicField>: MatrixProtocol, ExpressibleByArra
         self.dimensions = (matrix.rowCount, matrix.columnCount)
     }
     
-    public init(arrayLiteral elements: Array<Element>...) {
-        self.init(elements)
-    }
-    
     @inlinable
     public func elementAt(_ row: Int, _ column: Int) -> Element {
         elements[row * columnCount + column]
-    }
-    
-    @inlinable
-    public subscript(_ index: Int) -> MatrixRow<Self> {
-        return MatrixRow(self, index)
-    }
-    
+    }    
     
     @inlinable
     public subscript(_ row: Int, _ column: Int) -> Element {
@@ -67,3 +62,5 @@ public struct Matrix<Element: AlgebraicField>: MatrixProtocol, ExpressibleByArra
         set { self.elements[row * columnCount + column] = newValue }
     }
 }
+
+extension Matrix: Equatable where Element: Equatable {}
