@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import VectorsInSpace
+import VectorsInSpace
 import Numerics
 
 class CirculantMatrixTests: XCTestCase {

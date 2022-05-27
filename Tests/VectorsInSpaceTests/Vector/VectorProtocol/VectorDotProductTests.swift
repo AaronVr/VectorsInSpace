@@ -7,8 +7,8 @@
 
 import XCTest
 import Numerics
-import simd
-@testable import VectorsInSpace
+
+import VectorsInSpace
 
 class VectorDotProductTests: XCTestCase {
     func testDotProductSimpleReal() throws {

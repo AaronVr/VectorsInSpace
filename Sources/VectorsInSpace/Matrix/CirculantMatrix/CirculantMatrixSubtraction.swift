@@ -11,7 +11,7 @@ import RealModule
 extension CirculantMatrix
 where Element: AlgebraicField {
     @inlinable
-    public static func -(_ lhs: Self, _ rhs: Self) throws -> Self {
+    public static func -(_ lhs: Self, _ rhs: Self) -> Self {
         assert(lhs.dimensions == rhs.dimensions, "Incompatible matrix dimensions")
         
         return CirculantMatrix(lhs.sourceVector - rhs.sourceVector)

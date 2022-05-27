@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import VectorsInSpace
+import VectorsInSpace
 
 class CirculantMatrixMultiplicationTests: XCTestCase {
     func testPerformanceExample() throws {

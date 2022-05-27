@@ -7,7 +7,7 @@
 
 import XCTest
 import Numerics
-@testable import VectorsInSpace
+import VectorsInSpace
 
 class IDFTMatrices: XCTestCase {
     // TODO: More tests

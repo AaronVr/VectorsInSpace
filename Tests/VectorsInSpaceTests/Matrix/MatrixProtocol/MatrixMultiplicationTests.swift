@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import VectorsInSpace
+import VectorsInSpace
 
 class MatrixMultiplicationTests: XCTestCase {
     func testSimpleMatrixMultiplicationReal() throws {
@@ -51,10 +51,11 @@ class MatrixMultiplicationTests: XCTestCase {
         let A = Matrix<Double>(Array((0..<400).map {Double($0)}), (20, 20))
         let B = Matrix<Double>(Array((0..<400).map {Double($0)}), (20, 20))
         let _ = A * B
-//        measure {
-//            for _ in 0..<10000 {
-//                let _ = A * B
-//            }
-//        }
+        
+        measure {
+            for _ in 0..<10000 {
+                let _ = A * B
+            }
+        }
     }
 }

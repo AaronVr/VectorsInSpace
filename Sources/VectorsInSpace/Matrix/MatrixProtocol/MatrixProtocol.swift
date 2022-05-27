@@ -20,9 +20,9 @@ public protocol MatrixProtocol: CustomStringConvertible {
 
 public extension MatrixProtocol {
     @inlinable
-    var elements: ContiguousArray<Element> {
+    var elements: [Element] {
         get {
-            var elements: ContiguousArray<Element> = []
+            var elements: [Element] = []
             for row in 0..<rowCount {
                 for column in 0..<columnCount {
                     elements.append(self[row, column])

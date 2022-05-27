@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import VectorsInSpace
+import VectorsInSpace
 
 class VectorEqualityTests: XCTestCase {
     func testSelfEquality() throws {

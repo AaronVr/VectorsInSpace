@@ -11,19 +11,22 @@ import RealModule
 // TODO: Specialised multiplication operations for diagonal matrices
 public struct DiagonalMatrix<Element: AlgebraicField>: MatrixProtocol {
     public var dimensions: (Int, Int)
-    public var elements: ContiguousArray<Element>
+    @usableFromInline
+    internal var _elements: ContiguousArray<Element>
     
+    @inlinable
     public init(_ vector: Vector<Element>) {
-        self.elements = vector._elements
-        self.dimensions = (elements.count, elements.count)
+        self._elements = vector._elements
+        self.dimensions = (_elements.count, _elements.count)
     }
     
+    @inlinable
     public init(_ elements: [Element]) {
         self.init(Vector(elements))
     }
     
     @inlinable
     public subscript(row: Int, column: Int) -> Element {
-        get { row == column ? elements[row] : 0 }
+        get { row == column ? _elements[row] : 0 }
     }
 }
